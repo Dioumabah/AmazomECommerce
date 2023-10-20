@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -24,7 +25,7 @@ export class CheckoutComponent implements OnInit {
     "DeliveryLandMark": ""
   }
 
-  constructor(private productSrv: ProductService) {
+  constructor(private productSrv: ProductService,private toastr: ToastrService) {
     const localData = localStorage.getItem('amazon_user');
     if(localData != null) {
       const parseObj =  JSON.parse(localData);
@@ -34,7 +35,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
   }
   getCartData(id: number) {
     this.productSrv.getAddtocartdataByCust(id).subscribe((res: any)=>{
@@ -45,12 +46,12 @@ export class CheckoutComponent implements OnInit {
   placeOrder() {
     this.checkoutObj.checkoutObj =  this.loggedObj.custId;
     this.productSrv.PlaceOrder(this.checkoutObj).subscribe((res: any)=> {
-      if(res.result) { 
+      if(res.result) {
         this.productSrv.cartUpdated.next(true);
-        alert("Order Has Been Succefully Placed")
+        this.toastr.success('bmd!', 'La commande a été passée avec succès!');
       } else {
         alert(res.message)
       }
     })
-  } 
+  }
 }

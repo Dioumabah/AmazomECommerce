@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class ProductsComponent implements OnInit{
   selectedCategory: number = 0;
   loggedObj: any = {};
 
-  constructor(private productSrv: ProductService) {
+  constructor(private productSrv: ProductService,private toastr: ToastrService) {
     const localData = localStorage.getItem('amazon_user');
     if(localData != null) {
       const parseObj =  JSON.parse(localData);
@@ -37,7 +38,7 @@ export class ProductsComponent implements OnInit{
       this.productsArray = Res.data;
     })
   }
-  
+
 
   loadCategory() {
     this.productSrv.getAllCategory().subscribe((Res: any) =>{
@@ -58,15 +59,15 @@ export class ProductsComponent implements OnInit{
       }
       this.productSrv.addtoCart(obj).subscribe((res: any)=> {
         if(res.result) {
-          alert("Product Added to Cart"); 
+          this.toastr.success('bmd!', 'Produit ajouté au panier!');
           this.productSrv.cartUpdated.next(true);
         } else {
           alert(res.message)
         }
-      }) 
+      })
     }
     debugger;
-    
+
   }
 
 

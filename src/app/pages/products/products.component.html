@@ -4,13 +4,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="productHeading text-center">
-                    <h2 class="mb-3">Exclusive Products</h2>
+                    <h2 class="mb-3">Produits exclusifs</h2>
 
                     <ul class="list-unstyled d-flex flex-md-row  justify-content-center ">
                         <li *ngFor="let category of categories" (click)="getAllProductsByCateogry(category.categoryId)">
                             <a  class=" m-4  text-decoration-none  fw-semibold" [ngClass]="selectedCategory == category.categoryId?'text-danger':'text-black'">{{category.categoryName}}</a>
                         </li>
-                        
+
                     </ul>
                 </div>
             </div>
@@ -24,12 +24,12 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{product.productShortName}}</h5>
                                     <p class="card-text"><span
-                                            class="text-danger fw-semibold me-2">${{product.productPrice}}</span> 
-                                         
+                                            class="text-danger fw-semibold me-2">${{product.productPrice}}</span>
+
                                     </p>
                                     <div class="row">
                                         <div class="col-6">
-                                            <span><i class="fa-solid fa-star  m-0" style="color: #f1f50f;"></i></span> 
+                                            <span><i class="fa-solid fa-star  m-0" style="color: #f1f50f;"></i></span>
                                             <span><i class="fa-solid fa-star  m-0" style="color: #f1f50f;"></i></span>
                                             <span><i class="fa-solid fa-star-half-stroke  m-0"
                                                     style="color: #f1f50f;"></i></span>
@@ -47,7 +47,7 @@
 
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
         </div>

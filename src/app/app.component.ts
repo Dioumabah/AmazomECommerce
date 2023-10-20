@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ProductService } from './services/product.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,7 @@ export class AppComponent {
   loggedObj: any = {};
   cartItems: any[]= [];
   loginModelClass: string = '';
-  constructor(private productSrv: ProductService) {
+  constructor(private productSrv: ProductService,private toastr: ToastrService) {
     const localData = localStorage.getItem('amazon_user');
     if(localData != null) {
       const parseObj =  JSON.parse(localData);
@@ -50,7 +51,7 @@ export class AppComponent {
     this.productSrv.register(this.registerObj).subscribe((res: any)=> {
       if(res.result) {
         this.loggedObj = res.data;
-        alert("User Creation Done")
+        this.toastr.success('bmd!', 'Création d\'utilisateur terminée!');
       } else {
         alert(res.message)
       }
@@ -59,7 +60,7 @@ export class AppComponent {
   onLogin() {
     this.productSrv.login(this.loginObj).subscribe((res: any)=> {
       if(res.result) {
-        alert("User Login Success");
+          this.toastr.success('bmd!', 'Connexion réussie de l\'utilisateur!');
         this.loggedObj = res.data;
         this.loginModelClass = '';
         localStorage.setItem('amazon_user', JSON.stringify(res.data));
@@ -72,12 +73,12 @@ export class AppComponent {
   removeItem(cartId: number) {
     this.productSrv.removeProductFromCart(cartId).subscribe((res: any)=> {
       if(res.result) {
-        alert("Item Removed"); 
+        this.toastr.info('bmd!', 'Élément supprimé!');
         this.getCartData(this.loggedObj.custId)
       } else {
         alert(res.message)
       }
     })
   }
-  
+
 }
